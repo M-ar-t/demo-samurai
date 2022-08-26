@@ -1,0 +1,30 @@
+.classicPage,.selectedPage{
+    padding: 8px 16px;
+}
+.allPortion{
+    margin: 10px;
+}
+
+.selectedPage{
+    font-weight: bolder;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+.classicPage:hover,
+.buttonPortion:hover{
+    background-color: #ddd;
+    border-radius: 5px;
+}
+.pagesPortion{
+display: inline;
+}
+.buttonPortion{
+    display: inline;
+    color: black;
+    padding: 8px 8px;
+    text-decoration: none;
+    background-color: white;
+    border: none;
+    margin: 0px;
+}

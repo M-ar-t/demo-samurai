@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+.app-wrapper{
+  margin: 0 auto;
+  display: grid;
+  width: 100%;
+  font-family: 'Tahoma';
+  font-size: 15px;
+  /* letter-spacing: 1.5px; */
+  color: rgb(33, 32, 32);
+  grid-template-areas:
+  
+  "h"
+  "c"
+  ;
+  grid-template-rows: 90px 10fr;
+  /* grid-gap: 10px; */
+}

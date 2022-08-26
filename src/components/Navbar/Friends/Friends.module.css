@@ -1,0 +1,7 @@
+.FriendsBlock img {
+width: 60px;
+max-height: 60px;
+object-fit: cover;
+border-radius: 30px;
+}
+ 

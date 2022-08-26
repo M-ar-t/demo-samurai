@@ -1,0 +1,36 @@
+.nav{
+  padding: 10px;
+  grid-area: n;
+  background-color:#ffff;
+  margin: 10px;
+  border-radius: 10px;
+  height: auto;
+}
+.Set{
+  margin-top: 30px !important;
+}
+.nav div {
+margin: 10px;
+text-align: center;
+}
+.item{
+  color: rgb(33, 32, 32);
+  text-decoration: none;
+  margin: 10px;
+}
+.item a:hover{
+  color: rgb(220, 215, 150);
+  text-decoration: none;
+}
+.active{
+  color: rgb(147, 144, 98); 
+  text-decoration: none;
+}
+.nameAva{
+  display: grid;
+  grid-template-rows: 1fr 2fr ;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.caption{
+  font-size: 20px;
+}

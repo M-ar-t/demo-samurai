@@ -1,4 +1,7 @@
 import {
+  stopSubmit
+} from "redux-form";
+import {
   profileAPI,
   usersAPI
 } from "../../api/api";
@@ -7,6 +10,8 @@ const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
+const SAVE_CONTACT_DATA_SUCCESS = 'SAVE_CONTACT_DATA_SUCCESS';
 
 
 let initialState = {
@@ -48,7 +53,8 @@ let initialState = {
     },
   ],
   profile: null,
-  status: ""
+  status: "",
+  contactDataRecieveSuccess: false
 };
 
 export const mainContentReducer = (state = initialState, action) => {
@@ -68,6 +74,7 @@ export const mainContentReducer = (state = initialState, action) => {
       }
     }
     case SET_USER_PROFILE: {
+
       return {
         ...state,
         profile: action.profile
@@ -84,6 +91,23 @@ export const mainContentReducer = (state = initialState, action) => {
         ...state,
         postData: state.postData.filter(el => el.id !== action.id)
 
+      };
+    }
+    case SAVE_PHOTO_SUCCESS: {
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          photos: action.photos
+        }
+
+      };
+    }
+    case SAVE_CONTACT_DATA_SUCCESS: {
+      return {
+        ...state,
+        contactDataRecieveSuccess: true,
+        ...action.data
       };
     }
     default:
@@ -109,6 +133,20 @@ export const setStatus = (status) => ({
   type: SET_STATUS,
   status
 })
+export const savePhotoSuccess = (photos) => ({
+  type: SAVE_PHOTO_SUCCESS,
+  photos
+})
+export const saveContactDatSuccess = (contacts, aboutMe, lookingForAJob,lookingForAJobDescription, fullName) => ({
+  type: SAVE_CONTACT_DATA_SUCCESS,
+  data: {
+    contacts, 
+    aboutMe, 
+    lookingForAJob,
+    lookingForAJobDescription, 
+    fullName
+  }
+})
 
 export const userProfileRecieved = (userId) => async (dispatch) => {
   let data = await usersAPI.getUserProfile(userId)
@@ -125,5 +163,28 @@ export const updateStatus = (status) => async (dispatch) => {
     dispatch(setStatus(status))
   }
 }
+export const savePhoto = (file) => async (dispatch) => {
+  let response = await profileAPI.savePhoto(file)
+  if (response.data.resultCode === 0) {
+    dispatch(savePhotoSuccess(response.data.data.photos))
+  }
+}
+export const saveContactData = (contacts, aboutMe, lookingForAJob = false,lookingForAJobDescription, fullName) =>
+  async (dispatch, getState) => {
+  const userId = getState().auth.userId
+    let response = await profileAPI.saveContactData(contacts, aboutMe, lookingForAJob,lookingForAJobDescription, fullName)
+    if (response.data.resultCode === 0) {
+      dispatch(saveContactDatSuccess(contacts, aboutMe, lookingForAJob,lookingForAJobDescription, fullName))
+      dispatch(userProfileRecieved (userId))
+
+    } else {
+      dispatch(stopSubmit("contactData", {
+        "contacts": {
+          [response.data.messages[0].split('>')[1].split(')')[0].toLowerCase()]: response.data.messages[0]
+        }
+      }))
+      // return Promise.reject(response.data.messages[0])
+    }
+  }
 
 export default mainContentReducer

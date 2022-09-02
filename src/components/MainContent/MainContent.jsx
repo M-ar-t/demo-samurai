@@ -7,8 +7,15 @@ const MainContent = (props) => {
 
   return (
     <div>
-      <ProfileInfo status ={props.status} updateStatus = {props.updateStatus} profile ={props.profile} />
-      <MyPostsContainer/>
+      <ProfileInfo 
+      contactData = {props.contactData}
+      savePhoto={props.savePhoto}
+        isOwner={props.isOwner}
+        status={props.status}
+        updateStatus={props.updateStatus}
+        profile={props.profile} 
+        contactDataRecieveSuccess = {props.contactDataRecieveSuccess}/>
+      <MyPostsContainer />
     </div>
   )
 }

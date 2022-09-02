@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { compose } from 'redux';
 import { withRouter } from './components/MainContent/MainContentContainer';
 import Preloader from './components/common/preloader/Preloader';
-import { BrowserRouter} from 'react-router-dom';
+import { HashRouter} from 'react-router-dom';
 import store from './components/redux/redux-store';
 import { Provider } from 'react-redux';
 
@@ -17,7 +17,9 @@ class App extends React.Component {
     this.props.inizializeApp()
   }
   render(){
-    if(!this.props.initialized){<Preloader/>}
+    if(!this.props.initialized){
+      return <Preloader/>
+    }
     
     return <div className = 'app-wrapper'>
     <HeaderContainer/>
@@ -34,12 +36,12 @@ let AppContainer = compose(
     connect(mapStateToProps, {inizializeApp}))(App)
 
 const AppSamuraiJS = (props) =>{
-return <React.StrictMode basename = {process.env.PUBLIC_URL}>
-         <BrowserRouter>
+return <React.StrictMode>
+         <HashRouter>
          <Provider store = {store} >
       <AppContainer/>
       </Provider>
-      </BrowserRouter>
+      </HashRouter>
     </React.StrictMode>
 }
 

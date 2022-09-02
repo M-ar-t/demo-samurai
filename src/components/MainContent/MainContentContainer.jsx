@@ -1,7 +1,7 @@
 import React from 'react';
 import MainContent from './MainContent';
 import { connect } from "react-redux";
-import { userProfileRecieved, getStatus, updateStatus } from "../redux/mainContentPage-reducer"
+import { userProfileRecieved, getStatus, updateStatus, savePhoto, saveContactData } from "../redux/mainContentPage-reducer"
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 // import { withAuthRedirect } from '../../hoc/WithAuthRedirect';
 import { compose } from "redux"
@@ -9,34 +9,38 @@ import { withAuthRedirect } from '../../hoc/WithAuthRedirect';
 
 class MainContentContainer extends React.Component {
 
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.router.params.userId
     if (!userId) {
       userId = this.props.authorizedUserId
 
-      if(!userId){ 
+      if (!userId) {
         withAuthRedirect(MainContentContainer)
-
       }
     }
     this.props.userProfileRecieved(userId)
     this.props.getStatus(userId)
   }
-  // componentDidUpdate(){
-  //   let userId = this.props.router.params.userId
-  //   if (!userId) {
-  //     userId =  25383
-  //   }
-  //   this.props.userProfileRecieved(userId)
-  //   this.props.getStatus(userId)
-  // }
+  componentDidMount() {
+    this.refreshProfile()
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+    if (this.props.router.params.userId !== prevProps.router.params.userId) {
+      this.refreshProfile()
+    }
+  }
   render() {
 
     return (
-      <MainContent {...this.props} 
-                  profile={this.props.profile} 
-                  status={this.props.status} 
-                  updateStatus={this.props.updateStatus} />
+      <MainContent {...this.props}
+        isOwner={!this.props.router.params.userId}
+        profile={this.props.profile}
+        status={this.props.status}
+        updateStatus={this.props.updateStatus} 
+        savePhoto = {this.props.savePhoto}
+        contactData = {this.props.saveContactData}
+        contactDataRecieveSuccess = {this.props.contactDataRecieveSuccess}/>
     )
   }
 }
@@ -46,7 +50,8 @@ let mapStateToProps = (state) => ({
   profile: state.mainContentPage.profile,
   status: state.mainContentPage.status,
   authorizedUserId: state.auth.userId,
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  contactDataRecieveSuccess: state.mainContentPage.contactDataRecieveSuccess
 })
 
 
@@ -63,7 +68,7 @@ export const withRouter = (Component) => {
 
 export default compose(
   withAuthRedirect,
-  connect(mapStateToProps, { userProfileRecieved, getStatus, updateStatus }),
+  connect(mapStateToProps, { userProfileRecieved, getStatus, updateStatus, savePhoto, saveContactData}),
   withRouter
   // withAuthRedirect
 )(MainContentContainer)

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import {Routes, Route } from 'react-router-dom';
+import {Routes, Route,Navigate } from 'react-router-dom';
 import Preloader from '../common/preloader/Preloader';
 // import DialogsContainer from '../Dialogs/DialogsContainer';
 import Login from '../Login/Login';
@@ -18,11 +18,13 @@ const Profile  = (props) =>{
         <div className ={p.app_wrapper_content}>
           <Suspense fallback = {<div><Preloader/></div>}>
           <Routes>
+        <Route path = '/' element = {<Navigate to={'/maincontent'} />}/>
         <Route path = '/dialogs' element = {<DialogsContainer/>}/>
         <Route path = {'/maincontent/:userId'} element = {<MainContentContainer/>}/>
         <Route path = {'/maincontent/'} element = {<MainContentContainer/>}/>
         <Route path = '/users' element = {<UsersContainer/>}/>   
         <Route path = '/login' element = {<Login/>}/>   
+        <Route path = '*' element = {<div>404 NOT FOUND</div>}/>   
         </Routes>
           </Suspense>
         

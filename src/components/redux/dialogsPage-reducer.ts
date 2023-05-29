@@ -1,11 +1,22 @@
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
+export type initialStateType = typeof initialState
+
+type DialogType = {
+  id: number,
+  name: string,
+  ava: string
+}
+type MessageType = {
+    id: number,
+    message:string
+}
 let initialState = {
   dialog: [{
       id: 1,
       name: 'Masha',
       ava: 'https://kartinkin.net/uploads/posts/2022-02/1645799905_18-kartinkin-net-p-krasivie-kartinki-multyashnie-18.jpg'
-    },
+    } ,
     {
       id: 2,
       name: 'Dasha',
@@ -31,7 +42,7 @@ let initialState = {
       name: 'Anna',
       ava: 'https://i.pinimg.com/474x/45/a8/bd/45a8bd19ed3db5fd3305f198849c0b0d.jpg?nii=t'
     },
-  ],
+  ] as Array <DialogType>,
 
   messages: [{
       id: 1,
@@ -57,10 +68,10 @@ let initialState = {
       id: 6,
       message: 'i am fine'
     },
-  ]
+  ] as Array <MessageType>
 };
 
-export const dialogsPageReducer = (state = initialState, action) => {
+export const dialogsPageReducer = (state = initialState, action:any) => {
   switch (action.type) {
     case SEND_MESSAGE:
       let body = action.newMessageBody;
@@ -73,8 +84,11 @@ export const dialogsPageReducer = (state = initialState, action) => {
       return state;
   }
 }
-
-export const sendMessageCreator = (newMessageBody) => ({
+type sendMessageCreatorActionType = {
+  type: typeof SEND_MESSAGE,
+  newMessageBody:string
+}
+export const sendMessageCreator = (newMessageBody:string) :sendMessageCreatorActionType=> ({
   type: SEND_MESSAGE,
   newMessageBody
 })

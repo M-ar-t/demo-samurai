@@ -3,7 +3,8 @@ import { connect } from 'react-redux/es/exports';
 
 let mapStateToProps = (state) =>{
   return {
-    sidebar: state.sidebar.sidebar
+    sidebar: state.sidebar.sidebar,
+    authorizedUserId: state.auth.userId,
   }
 }
 let mapDispathToProps = () =>{

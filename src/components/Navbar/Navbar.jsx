@@ -4,13 +4,14 @@ import n from './Navbar.module.css';
 import Friend from './Friends/Friends';
 
 const Navbar = (props) => {
+  let userId = props.authorizedUserId
   let state = props.sidebar
   let MyFriends = state.map(p => <Friend name={p.name} img={p.img} key ={p.id}/>)
   return (
     <nav className={n.nav}>
       <div className={n.change}>
         <div className={n.item}>
-          <NavLink to='/maincontent' className={navData => navData.isActive ? n.active : n.item}>Profile</NavLink>
+          <NavLink to={`/maincontent/${userId}`} className={navData => navData.isActive ? n.active : n.item}>Profile</NavLink>
         </div>
         <div className={n.item}>
           <NavLink to='/dialogs' className={navData => navData.isActive ? n.active : n.item}>Messages</NavLink>

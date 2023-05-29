@@ -38,10 +38,10 @@ let AppContainer = compose(
 const AppSamuraiJS = (props) =>{
 return <React.StrictMode>
          <HashRouter>
-         <Provider store = {store} >
-      <AppContainer/>
-      </Provider>
-      </HashRouter>
+            <Provider store = {store} >
+                 <AppContainer/>
+            </Provider>
+        </HashRouter>
     </React.StrictMode>
 }
 

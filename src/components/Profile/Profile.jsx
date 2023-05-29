@@ -21,12 +21,12 @@ const Profile  = (props) =>{
         <Route path = '/' element = {<Navigate to={'/maincontent'} />}/>
         <Route path = '/dialogs' element = {<DialogsContainer/>}/>
         <Route path = {'/maincontent/:userId'} element = {<MainContentContainer/>}/>
-        <Route path = {'/maincontent/'} element = {<MainContentContainer/>}/>
+        <Route path = {'/maincontent'} element ={ <Navigate to={'/maincontent/:userId'} />}/>
         <Route path = '/users' element = {<UsersContainer/>}/>   
         <Route path = '/login' element = {<Login/>}/>   
-        <Route path = '*' element = {<div>404 NOT FOUND</div>}/>   
+        <Route path = '*' element = {<div className={p.notFound}>404 NOT FOUND</div>}/>   
         </Routes>
-          </Suspense>
+          </Suspense> 
         
         </div>
              </div> 

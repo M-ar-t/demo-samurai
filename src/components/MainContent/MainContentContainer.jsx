@@ -70,5 +70,4 @@ export default compose(
   withAuthRedirect,
   connect(mapStateToProps, { userProfileRecieved, getStatus, updateStatus, savePhoto, saveContactData}),
   withRouter
-  // withAuthRedirect
 )(MainContentContainer)
